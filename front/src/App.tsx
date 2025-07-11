@@ -5,7 +5,6 @@ import MediaSelectionScreen from './screens/faceAI/MediaSelectionScreen';
 import FaceResultScreen from './screens/MainSceen/FaceResultScreen';
 import InfoScreen from './screens/MainSceen/InfoScreen';
 import SurveyScreen from './screens/survey/SurveyScreen';
-import ResultScreen from './screens/survey/ResultScreen';
 import FaceTestScreen from './screens/survey/FaceTestScreen';
 
 function App() {
@@ -22,7 +21,6 @@ function App() {
             <Route path="/face-result" element={<FaceResultScreen />} />
             <Route path="/info" element={<InfoScreen />} />
             <Route path="/survey" element={<SurveyScreen />} />
-            <Route path="/result" element={<ResultScreen />} />
             <Route path="/face-test" element={<FaceTestScreen />} />
           </Routes>
         </main>

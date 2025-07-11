@@ -272,7 +272,7 @@ const FaceResultScreen: React.FC = () => {
       {descModalVisible && (
         <dialog id="desc_modal" className="modal modal-open">
           <div className="modal-box text-center p-7 sm:p-10 rounded-2xl">
-            <h3 className="font-bold text-lg sm:text-2xl mb-6">{t.detail || "분석 설명"}</h3>
+            <h3 className="font-bold text-lg sm:text-2xl mb-6">{ "분석 설명"}</h3>
             <p className="py-3 sm:py-4 text-base sm:text-lg leading-relaxed">{selectedDesc}</p>
             <div className="modal-action mt-7 sm:mt-8">
               <button
