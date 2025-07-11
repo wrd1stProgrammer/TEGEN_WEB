@@ -1,7 +1,7 @@
 
 // FOR LOCAL
 
-export const BASE_URL = `http://172.30.1.83:3000`
+export const BASE_URL = `http://13.125.195.166:5001`
   
 // RUNNING ON REAL DEVICE USE YOUR NETWORK IP TO ACCESS ON REAL DEVICE
 //eg http://192.168.29.88:3000
