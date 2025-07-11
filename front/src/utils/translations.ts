@@ -92,7 +92,7 @@ export const translations = {
   },
   faceResultTranslations: {
     ko: {
-      title: '테겐 분석 결과',
+      title: '테겐상 분석 결과',
       axes: {
         expression: '표정',
         face_shape: '얼굴형',

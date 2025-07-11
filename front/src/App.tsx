@@ -27,7 +27,7 @@ function App() {
 
         <footer className="footer footer-center bg-base-300 text-base-content p-6">
           <aside>
-            <p className="text-base">Copyright © 2025 - All right reserved by sern</p>
+            <p className="text-base">Developed by @mins2k</p>
           </aside>
         </footer>
       </Router>
