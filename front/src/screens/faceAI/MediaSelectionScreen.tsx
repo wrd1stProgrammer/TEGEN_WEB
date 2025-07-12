@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -10,7 +10,6 @@ import {
   SparklesIcon,
   XMarkIcon,
 } from '@heroicons/react/24/solid';
-import axios from 'axios';
 import { useAppDispatch } from '../../redux/config/reduxHook';
 import { uploadFile } from '../../redux/actions/fileAction';
 import { geminiImageAction } from '../../redux/actions/geminiAction';
@@ -48,15 +47,14 @@ const MediaSelectionScreen: React.FC = () => {
     if (!selectedImage) return;
     setLoading(true);
     try {
-      // 1. 파일 업로드 (uploadFile redux action 사용)
-      // mediaType은 필요에 따라 'image' 등으로 고정/동적 할당
-      const mediaUrl = await dispatch(uploadFile(selectedImage,'face_image'));
+      // 1. 파일 업로드
+      const mediaUrl = await dispatch(uploadFile(selectedImage, 'face_image'));
       if (!mediaUrl) throw new Error('업로드 실패');
-  
-      // 2. Gemini 얼굴 분석 (geminiImageAction redux action 사용)
-      const res = await dispatch(geminiImageAction(mediaUrl,sex,lang));
+
+      // 2. Gemini 얼굴 분석
+      const res = await dispatch(geminiImageAction(mediaUrl, sex, lang));
       if (!res) throw new Error('분석 실패');
-  
+
       // 3. 결과 페이지 이동
       navigate('/face-result', { state: { scores: res.data, sex, photoUri: mediaUrl } });
     } catch (error) {
@@ -66,35 +64,47 @@ const MediaSelectionScreen: React.FC = () => {
     }
   };
 
+  // 카카오 애드핏 Web SDK 스크립트 로드
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://t1.daumcdn.net/kas/static/ba.min.js';
+    script.type = 'text/javascript';
+    script.async = true;
+    script.charset = 'utf-8';
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-160px)] bg-base-200 px-2 sm:px-4 py-8">
-{/* Back button */}
-<div className="w-full max-w-md flex items-center">
-  <button
-    onClick={() => navigate(-1)}
-    aria-label="뒤로가기"
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      width: 40,
-      height: 40,
-      borderRadius: '50%',
-      background: 'rgba(245,245,245,0.88)',
-      boxShadow: '0 2px 8px 0 rgba(0,0,0,0.06)',
-      border: 'none',
-      cursor: 'pointer',
-      marginLeft: 2,
-      marginTop: 2,
-      transition: 'background 0.2s',
-    }}
-    onMouseOver={e => (e.currentTarget.style.background = 'rgba(225,225,225,0.92)')}
-    onMouseOut={e => (e.currentTarget.style.background = 'rgba(245,245,245,0.88)')}
-  >
-    <ChevronLeftIcon style={{ width: 22, height: 22, color: '#7c7c7c' }} />
-  </button>
-</div>
-
+      {/* Back button */}
+      <div className="w-full max-w-md flex items-center">
+        <button
+          onClick={() => navigate(-1)}
+          aria-label="뒤로가기"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            background: 'rgba(245,245,245,0.88)',
+            boxShadow: '0 2px 8px 0 rgba(0,0,0,0.06)',
+            border: 'none',
+            cursor: 'pointer',
+            marginLeft: 2,
+            marginTop: 2,
+            transition: 'background 0.2s',
+          }}
+          onMouseOver={e => (e.currentTarget.style.background = 'rgba(225,225,225,0.92)')}
+          onMouseOut={e => (e.currentTarget.style.background = 'rgba(245,245,245,0.88)')}
+        >
+          <ChevronLeftIcon style={{ width: 22, height: 22, color: '#7c7c7c' }} />
+        </button>
+      </div>
 
       <div className="w-full max-w-md rounded-2xl bg-white shadow-md flex flex-col items-center py-7 px-4 sm:px-8 gap-6">
         {/* Title */}
@@ -117,7 +127,11 @@ const MediaSelectionScreen: React.FC = () => {
                 }}
               />
               <button
-                onClick={() => { setSelectedImage(null); setPreview(null); URL.revokeObjectURL(preview); }}
+                onClick={() => {
+                  setSelectedImage(null);
+                  setPreview(null);
+                  URL.revokeObjectURL(preview);
+                }}
                 style={{
                   position: 'absolute',
                   top: 6,
@@ -148,7 +162,9 @@ const MediaSelectionScreen: React.FC = () => {
             >
               <input {...getInputProps()} />
               <PhotoIcon className="h-8 w-8 sm:h-10 sm:w-10 text-primary mb-2" />
-              <span className="text-base sm:text-lg font-medium text-gray-700">{t.pickGalleryText}</span>
+              <span className="text-base sm:text-lg font-medium text-gray-700">
+                {t.pickGalleryText}
+              </span>
             </div>
           )}
         </div>
@@ -224,6 +240,17 @@ const MediaSelectionScreen: React.FC = () => {
           <p className="text-base sm:text-lg text-primary">{t.analyzingText}</p>
         </div>
       )}
+
+      {/* 카카오 애드핏 광고 삽입 영역 */}
+      <div className="w-full max-w-md mt-8 flex justify-center">
+    <ins
+     className="kakao_ad_area"
+     style={{ display: 'none', width: '320px', height: '100px' }}
+     data-ad-unit="DAN-GOQPydEh03UEEZCj"
+     data-ad-width="320"
+     data-ad-height="100"
+   ></ins>
+      </div>
     </div>
   );
 };

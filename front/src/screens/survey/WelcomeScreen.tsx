@@ -43,7 +43,7 @@ const WelcomeScreen: React.FC = () => {
     <div className="flex flex-col items-center justify-center min-h-[calc(100vh-160px)] p-4 sm:p-8 bg-base-200">
       <div className="w-full max-w-md rounded-2xl bg-white shadow-xl p-8 sm:p-12 flex flex-col items-center">
         <h1 className="text-3xl sm:text-4xl font-bold text-primary mb-4 text-center">{greet}</h1>
-        <p className="text-base sm:text-lg text-gray-600 mb-10 text-center">얼굴로 보는 인공지능 동물상 테스트</p>
+        <p className="text-base sm:text-lg text-gray-600 mb-10 text-center">TETO EGEN AI FACE TEST</p>
 
         {/* 언어 선택 영역 */}
         <div className="w-full flex flex-col items-center gap-2 mb-8">
