@@ -11,8 +11,6 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Router>
-        
-
         <main className="flex-grow max-w-screen-lg mx-auto p-8">
           <Routes>
             <Route path="/" element={<WelcomeScreen />} />
@@ -26,8 +24,29 @@ function App() {
         </main>
 
         <footer className="footer footer-center bg-base-300 text-base-content p-6">
+          {/* 링크 모음: Privacy & SNS (세로 배치) */}
+          <div className="flex flex-col items-center gap-2 mb-2">
+            <a
+              href="https://kind-walkover-f46.notion.site/226566b53c5b802cb11dd952e8a74b12?source=copy_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="https://www.instagram.com/tegenai_official?igsh=MWQ0bHZnbmc5ZmlrOQ%3D%3D&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm"
+            >
+              Instagram
+            </a>
+          </div>
+
+          {/* 저작권 및 개발자 정보 */}
           <aside>
-            <p className="text-base">Developed by @mins2k</p>
+            <p className="text-sm">© 2025 Developed by @mins2k</p>
           </aside>
         </footer>
       </Router>
