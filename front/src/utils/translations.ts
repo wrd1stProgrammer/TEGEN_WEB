@@ -14,7 +14,7 @@ export const translations = {
       pickGalleryText: '사진 업로드',
       takePhotoText: '사진 촬영',
       analyzeButton: '테겐상 분석하기',
-      analyzingText: '분석 중...',
+      analyzingText: '분석 중.. (구글 서버 환경에 따라 최대 30초가 걸립니다)',
       tip1: '정확한 분석을 위해 정면 사진을 사용해주세요.',
       tip2: '얼굴이 잘 보이는 밝은 사진을 사용해주세요.',
       modalTitle: '광고 시청 후 분석',
@@ -197,7 +197,7 @@ export const translations = {
       share: '分享',
       retryConfirm: '您要再次分析吗？\n以前的结果将丢失。',
       cancel: '取消',
-      confirm: '确认',
+      confirm: '确认',  
     },
     vi: {
       title: 'Kết quả phân tích Tegen',

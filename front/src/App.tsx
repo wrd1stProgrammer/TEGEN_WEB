@@ -1,3 +1,4 @@
+// App.tsx
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomeScreen from './screens/survey/WelcomeScreen';
 import GenderScreen from './screens/survey/GenderScreen';
@@ -11,6 +12,7 @@ function App() {
   return (
     <div className="min-h-screen flex flex-col bg-base-200">
       <Router>
+        {/* 메인 라우팅 영역 */}
         <main className="flex-grow max-w-screen-lg mx-auto p-8">
           <Routes>
             <Route path="/" element={<WelcomeScreen />} />
@@ -23,6 +25,7 @@ function App() {
           </Routes>
         </main>
 
+        {/* 푸터 */}
         <footer className="footer footer-center bg-base-300 text-base-content p-6">
           {/* 링크 모음: Privacy & SNS (세로 배치) */}
           <div className="flex flex-col items-center gap-2 mb-2">
@@ -30,7 +33,8 @@ function App() {
               href="https://kind-walkover-f46.notion.site/226566b53c5b802cb11dd952e8a74b12?source=copy_link"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm"
+              /* 글씨를 둥글둥글한 배지 형태 + 밑줄 제거 */
+              className="text-sm px-3 py-1 rounded-full bg-base-100 no-underline hover:bg-base-200 transition-colors"
             >
               Privacy Policy
             </a>
@@ -38,7 +42,7 @@ function App() {
               href="https://www.instagram.com/tegenai_official?igsh=MWQ0bHZnbmc5ZmlrOQ%3D%3D&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm"
+              className="text-sm px-3 py-1 rounded-full bg-base-100 no-underline hover:bg-base-200 transition-colors"
             >
               Instagram
             </a>

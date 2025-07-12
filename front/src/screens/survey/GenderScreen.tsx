@@ -16,7 +16,7 @@ const GenderScreen: React.FC = () => {
         <div className="flex flex-row gap-8 w-full max-w-xs mx-auto justify-center">
           <Link
             to="/media-selection?gender=male"
-            className="flex flex-col items-center justify-center gap-2 btn btn-primary btn-lg w-32 h-32 rounded-2xl text-lg sm:text-xl font-bold shadow hover:scale-105 transition"
+            className="flex flex-col items-center justify-center gap-2 w-32 h-32 rounded-2xl text-lg sm:text-xl font-bold shadow transform transition hover:scale-105 bg-blue-500 hover:bg-blue-600 text-white"
             style={{ minWidth: 110, minHeight: 110 }}
           >
             <Mars size={48} strokeWidth={2.2} className="mb-1" />
@@ -24,7 +24,7 @@ const GenderScreen: React.FC = () => {
           </Link>
           <Link
             to="/media-selection?gender=female"
-            className="flex flex-col items-center justify-center gap-2 btn btn-secondary btn-lg w-32 h-32 rounded-2xl text-lg sm:text-xl font-bold shadow hover:scale-105 transition"
+            className="flex flex-col items-center justify-center gap-2 w-32 h-32 rounded-2xl text-lg sm:text-xl font-bold shadow transform transition hover:scale-105 bg-red-500 hover:bg-red-600 text-white"
             style={{ minWidth: 110, minHeight: 110 }}
           >
             <Venus size={48} strokeWidth={2.2} className="mb-1" />
