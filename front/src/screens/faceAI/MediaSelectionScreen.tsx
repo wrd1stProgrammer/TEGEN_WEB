@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useSelector } from 'react-redux';
-import { useNavigate, useLocation } from 'react-router-dom';
 import type { RootState } from '../../redux/config/store';
 import { translations, type LangCode } from '../../utils/translations';
 import {
@@ -13,14 +12,16 @@ import {
 import { useAppDispatch } from '../../redux/config/reduxHook';
 import { uploadFile } from '../../redux/actions/fileAction';
 import { geminiImageAction } from '../../redux/actions/geminiAction';
+import { type Scores } from '../MainSceen/FaceResultScreen';
 
-const MediaSelectionScreen: React.FC = () => {
+interface MediaSelectionScreenProps {
+  onNext: (scores: Scores, photoUri: string) => void;
+  onBack: () => void;
+  gender: 'male' | 'female' | null;
+}
+
+const MediaSelectionScreen: React.FC<MediaSelectionScreenProps> = ({ onNext, onBack, gender }) => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const sex = queryParams.get('gender') === 'male' ? '남' : '여';
-
   const lang = useSelector((state: RootState) => state.language.lang) as LangCode;
   const t = translations.mediaTranslations[lang];
 
@@ -44,19 +45,17 @@ const MediaSelectionScreen: React.FC = () => {
   });
 
   const handleAnalyze = async () => {
-    if (!selectedImage) return;
+    if (!selectedImage || !gender) return;
     setLoading(true);
     try {
-      // 1. 파일 업로드
       const mediaUrl = await dispatch(uploadFile(selectedImage, 'face_image'));
       if (!mediaUrl) throw new Error('업로드 실패');
 
-      // 2. Gemini 얼굴 분석
+      const sex = gender === 'male' ? '남' : '여';
       const res = await dispatch(geminiImageAction(mediaUrl, sex, lang));
       if (!res) throw new Error('분석 실패');
 
-      // 3. 결과 페이지 이동
-      navigate('/face-result', { state: { scores: res.data, sex, photoUri: mediaUrl } });
+      onNext(res.data, mediaUrl);
     } catch (error) {
       alert(t.errorText);
     } finally {
@@ -64,7 +63,6 @@ const MediaSelectionScreen: React.FC = () => {
     }
   };
 
-  // 카카오 애드핏 Web SDK 스크립트 로드
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://t1.daumcdn.net/kas/static/ba.min.js';
@@ -79,10 +77,9 @@ const MediaSelectionScreen: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center min-h-[calc(100vh-160px)] bg-base-200 px-2 sm:px-4 py-8">
-      {/* Back button */}
       <div className="w-full max-w-md flex items-center">
         <button
-          onClick={() => navigate(-1)}
+          onClick={onBack}
           aria-label="뒤로가기"
           style={{
             display: 'flex',
@@ -107,10 +104,8 @@ const MediaSelectionScreen: React.FC = () => {
       </div>
 
       <div className="w-full max-w-md rounded-2xl bg-white shadow-md flex flex-col items-center py-7 px-4 sm:px-8 gap-6">
-        {/* Title */}
         <h1 className="text-xl sm:text-2xl font-bold text-primary">{t.title}</h1>
 
-        {/* File upload or preview */}
         <div className="w-full flex flex-col items-center gap-2">
           {preview ? (
             <div className="relative flex flex-col items-center w-full mb-2">
@@ -130,7 +125,7 @@ const MediaSelectionScreen: React.FC = () => {
                 onClick={() => {
                   setSelectedImage(null);
                   setPreview(null);
-                  URL.revokeObjectURL(preview);
+                  if (preview) URL.revokeObjectURL(preview);
                 }}
                 style={{
                   position: 'absolute',
@@ -169,14 +164,12 @@ const MediaSelectionScreen: React.FC = () => {
           )}
         </div>
 
-        {/* 여백 추가 */}
         <div className="h-2 sm:h-4" />
 
         <div className="w-full mt-1 text-center">
           <p className="text-xs sm:text-sm text-gray-400 mt-1"></p>
         </div>
 
-        {/* Analyze button */}
         <button
           onClick={handleAnalyze}
           disabled={!selectedImage || loading}
@@ -194,17 +187,14 @@ const MediaSelectionScreen: React.FC = () => {
           {loading ? t.analyzingText : t.analyzeButton}
         </button>
 
-        {/* 여백 추가 */}
         <div className="h-5 sm:h-5" />
 
-        {/* Tips */}
         <div className="w-full mt-1 text-center">
           <p className="text-xs sm:text-sm text-gray-500">{t.tip1}</p>
           <p className="text-xs sm:text-sm text-gray-400 mt-1">{t.tip2}</p>
         </div>
       </div>
 
-      {/* Modal */}
       {modalVisible && (
         <dialog id="ad_modal" className="modal modal-open z-50">
           <div className="modal-box rounded-2xl p-6 sm:p-8 bg-white text-center">
@@ -233,7 +223,6 @@ const MediaSelectionScreen: React.FC = () => {
         </dialog>
       )}
 
-      {/* 로딩 오버레이 */}
       {loading && (
         <div className="fixed inset-0 bg-base-200 bg-opacity-60 flex flex-col justify-center items-center z-50">
           <span className="loading loading-spinner loading-md text-primary mb-3"></span>
@@ -241,7 +230,6 @@ const MediaSelectionScreen: React.FC = () => {
         </div>
       )}
 
-      {/* 카카오 애드핏 광고 삽입 영역 */}
       <div className="w-full max-w-md mt-8 flex justify-center">
     <ins
      className="kakao_ad_area"

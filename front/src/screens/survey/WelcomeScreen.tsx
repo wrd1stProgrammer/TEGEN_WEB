@@ -1,6 +1,5 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import type { RootState } from '../../redux/config/store';
 import { setLanguage } from '../../redux/reducers/languageSlice';
 
@@ -30,7 +29,11 @@ const langText: Record<LangCode, string> = {
   vi: 'Tiếng Việt',
 };
 
-const WelcomeScreen: React.FC = () => {
+interface WelcomeScreenProps {
+  onNext: () => void;
+}
+
+const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onNext }) => {
   const dispatch = useDispatch();
   const lang = useSelector((s: RootState) => s.language.lang) as LangCode;
   const { greet, btn } = translations[lang];
@@ -78,8 +81,8 @@ const WelcomeScreen: React.FC = () => {
         </div>
 
         {/* 시작하기 버튼 */}
-        <Link
-          to="/gender"
+        <button
+          onClick={onNext}
           className="w-full max-w-xs py-4 text-lg sm:text-xl font-bold tracking-tight
             bg-primary text-white rounded-full shadow-lg
             hover:bg-primary/90 transition-all duration-150
@@ -93,7 +96,7 @@ const WelcomeScreen: React.FC = () => {
           }}
         >
           {btn}
-        </Link>
+        </button>
       </div>
     </div>
   );

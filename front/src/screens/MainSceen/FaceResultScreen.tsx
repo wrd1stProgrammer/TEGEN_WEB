@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { type RootState } from '../../redux/config/store';
 import { type LangCode, translations } from '../../utils/translations';
@@ -10,7 +9,7 @@ interface ScoreData {
   score: number;
   desc: string;
 }
-interface Scores {
+export interface Scores {
   expression: ScoreData;
   face_shape: ScoreData;
   physiognomy: ScoreData;
@@ -18,10 +17,11 @@ interface Scores {
   atmosphere: ScoreData;
   total?: ScoreData;
 }
-interface FaceResultScreenState {
-  scores: Scores;
+interface FaceResultScreenProps {
+  scores: Scores | null;
   sex: '남' | '여';
-  photoUri: string;
+  photoUri: string | null;
+  onBack: () => void;
 }
 
 const CHART_SIZE_MOBILE = 220;
@@ -38,12 +38,13 @@ const barLabelColors = [
   '#fa7bff', '#43e97b', '#38b6ff', '#ffd66c', '#b388ff'
 ];
 
-const FaceResultScreen: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { scores, sex, photoUri } = location.state as FaceResultScreenState;
+const FaceResultScreen: React.FC<FaceResultScreenProps> = ({ scores, sex, photoUri, onBack }) => {
   const lang = useSelector((state: RootState) => state.language.lang) as LangCode;
   const t = translations.faceResultTranslations[lang];
+
+  if (!scores || !photoUri) {
+    return <div>결과를 표시할 수 없습니다.</div>; // 혹은 로딩이나 다른 UI
+  }
 
   const axes = [
     { key: 'expression', label: t.axes.expression },
@@ -86,7 +87,7 @@ const FaceResultScreen: React.FC = () => {
       {/* 뒤로가기 */}
       <div className="w-full max-w-lg flex justify-start mb-2 sm:mb-6">
         <button
-          onClick={() => navigate(-1)}
+          onClick={onBack}
           style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             width: 44, height: 44, borderRadius: '50%',
