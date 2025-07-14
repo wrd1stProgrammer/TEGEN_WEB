@@ -88,7 +88,7 @@ const FaceResultScreen: React.FC<FaceResultScreenProps> = ({ scores, sex, photoU
   };
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-160px)] px-1 py-2 sm:px-4 sm:py-8 bg-base-200 transition-all">
+    <div className="flex flex-col items-center min-h-[calc(100vh-160px)] px-1 py-2 sm:px-4 sm:py-8 bg-base-200 transition-all overflow-y-auto">
       {/* Back Button */}
       <div className="w-full max-w-lg flex justify-start mb-2 sm:mb-6">
         <button

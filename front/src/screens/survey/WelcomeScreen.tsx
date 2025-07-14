@@ -83,7 +83,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onNext }) => {
         {/* 시작하기 버튼 */}
         <button
           onClick={onNext}
-          className="w-full max-w-xs py-4 text-lg sm:text-xl font-bold tracking-tight
+          className="w-full max-w-xs py-10 text-lg sm:text-xl font-bold tracking-tight
             bg-primary text-white rounded-full shadow-lg
             hover:bg-primary/90 transition-all duration-150
             flex items-center justify-center

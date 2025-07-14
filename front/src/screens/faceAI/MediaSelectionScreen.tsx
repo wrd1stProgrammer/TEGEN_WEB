@@ -223,12 +223,6 @@ const MediaSelectionScreen: React.FC<MediaSelectionScreenProps> = ({ onNext, onB
         </dialog>
       )}
 
-      {loading && (
-        <div className="fixed inset-0 bg-base-200 bg-opacity-60 flex flex-col justify-center items-center z-50">
-          <span className="loading loading-spinner loading-md text-primary mb-3"></span>
-          <p className="text-base sm:text-lg text-primary">{t.analyzingText}</p>
-        </div>
-      )}
 
       <div className="w-full max-w-md mt-8 flex justify-center">
     <ins

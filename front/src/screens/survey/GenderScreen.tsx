@@ -30,7 +30,7 @@ const GenderScreen: React.FC<GenderScreenProps> = ({ onNext }) => {
               transition-transform hover:scale-105 focus:outline-none
             "
           >
-            <Mars size={48} strokeWidth={2.2} />
+            <Mars size={48} strokeWidth={2.2} color="blue" />
             <span>{male}</span>
           </button>
 
@@ -44,7 +44,7 @@ const GenderScreen: React.FC<GenderScreenProps> = ({ onNext }) => {
               transition-transform hover:scale-105 focus:outline-none
             "
           >
-            <Venus size={48} strokeWidth={2.2} />
+            <Venus size={48} strokeWidth={2.2} color="red" />
             <span>{female}</span>
           </button>
         </div>
