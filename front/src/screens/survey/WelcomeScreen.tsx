@@ -90,6 +90,7 @@ const WelcomeScreen: React.FC<WelcomeScreenProps> = ({ onNext }) => {
           "
           style={{
             marginTop: '1.5rem',
+            
             marginBottom: '0.5rem',
             fontFamily: 'inherit',
             letterSpacing: '-0.01em',

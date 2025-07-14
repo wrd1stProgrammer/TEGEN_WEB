@@ -90,7 +90,7 @@ function App() {
           </a>
         </div>
         <aside>
-          <p className="text-sm">© 2025 Developed by @mins2k</p>
+          <p className="text-sm">© 2025 SERN. All Rights Reserved.</p>
         </aside>
       </footer>
     </div>
