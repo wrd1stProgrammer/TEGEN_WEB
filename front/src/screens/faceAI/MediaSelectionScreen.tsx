@@ -271,7 +271,7 @@ const MediaSelectionScreen: React.FC<MediaSelectionScreenProps> = ({ onNext, gen
         </div>
       </div>
 
-      <div className="w-full max-w-md mt-8 flex justify-center">
+      {/* <div className="w-full max-w-md mt-8 flex justify-center">
         <ins
           className="kakao_ad_area"
           style={{ display: 'none', width: '320px', height: '100px' }}
@@ -279,7 +279,7 @@ const MediaSelectionScreen: React.FC<MediaSelectionScreenProps> = ({ onNext, gen
           data-ad-width="320"
           data-ad-height="100"
         ></ins>
-      </div>
+      </div> */}
     </div>
   );
 };
