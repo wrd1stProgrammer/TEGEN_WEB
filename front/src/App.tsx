@@ -1,25 +1,14 @@
 import React, { useState } from 'react';
-import WelcomeScreen from './screens/survey/WelcomeScreen';
-import GenderScreen from './screens/survey/GenderScreen';
 import MediaSelectionScreen from './screens/faceAI/MediaSelectionScreen';
 import FaceResultScreen, { type Scores } from './screens/MainSceen/FaceResultScreen';
 
-type Step = 'welcome' | 'gender' | 'media-selection' | 'face-result';
+type Step = 'media-selection' | 'face-result';
 
 function App() {
-  const [step, setStep] = useState<Step>('welcome');
-  const [gender, setGender] = useState<'male' | 'female' | null>(null);
+  const [step, setStep] = useState<Step>('media-selection');
   const [scores, setScores] = useState<Scores | null>(null);
   const [photoUri, setPhotoUri] = useState<string | null>(null);
-
-  const handleWelcomeNext = () => {
-    setStep('gender');
-  };
-
-  const handleGenderNext = (selectedGender: 'male' | 'female') => {
-    setGender(selectedGender);
-    setStep('media-selection');
-  };
+  const [gender, setGender] = useState<'male' | 'female'>('female'); // Default gender
 
   const handleMediaSelectionNext = (newScores: Scores, newPhotoUri: string) => {
     setScores(newScores);
@@ -28,27 +17,19 @@ function App() {
   };
 
   const handleGoBack = () => {
-    if (step === 'gender') {
-      setStep('welcome');
-    } else if (step === 'media-selection') {
-      setStep('gender');
-    } else if (step === 'face-result') {
+    if (step === 'face-result') {
       setStep('media-selection');
     }
   };
 
   const renderStep = () => {
     switch (step) {
-      case 'welcome':
-        return <WelcomeScreen onNext={handleWelcomeNext} />;
-      case 'gender':
-        return <GenderScreen onNext={handleGenderNext} />;
       case 'media-selection':
         return (
           <MediaSelectionScreen
             onNext={handleMediaSelectionNext}
-            onBack={handleGoBack}
             gender={gender}
+            setGender={setGender}
           />
         );
       case 'face-result':
@@ -61,38 +42,69 @@ function App() {
           />
         );
       default:
-        return <WelcomeScreen onNext={handleWelcomeNext} />;
+        return (
+          <MediaSelectionScreen
+            onNext={handleMediaSelectionNext}
+            gender={gender}
+            setGender={setGender}
+          />
+        );
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-base-200">
+    <div className="flex flex-col font-sans ">
       <main className="flex-grow max-w-screen-lg mx-auto p-8">
         {renderStep()}
       </main>
-      <footer className="footer footer-center bg-base-300 text-base-content p-6">
-        <div className="flex flex-col items-center gap-2 mb-2">
-          <a
-            href="https://kind-walkover-f46.notion.site/226566b53c5b802cb11dd952e8a74b12?source=copy_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm px-3 py-1 rounded-full bg-base-100 no-underline hover:bg-base-200 transition-colors"
-          >
-            Privacy Policy
-          </a>
-          <a
-            href="https://www.instagram.com/tegenai_official?igsh=MWQ0bHZnbmc5ZmlrOQ%3D%3D&utm_source=qr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm px-3 py-1 rounded-full bg-base-100 no-underline hover:bg-base-200 transition-colors"
-          >
-            Instagram
-          </a>
-        </div>
-        <aside>
+
+      {/* 수정된 푸터 */}
+      {/* 중앙 정렬된 푸터 */}
+      <footer className="footer bg-base-300 p-6">
+        <div className="flex flex-col items-center gap-2">
+          {/* 저작권 문구 */}
           <p className="text-sm">© 2025 SERN. All Rights Reserved.</p>
-        </aside>
+
+{/* 링크들을 가로 배치 & 중앙 정렬 (인라인 스타일 버전) */}
+<div
+  style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }}
+>
+  <a
+    href="https://kind-walkover-f46.notion.site/..."
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      marginRight: '1.5rem',   // ← 32px 만큼 띄우기
+      textDecoration: 'none',
+      padding: '0.25rem 0.75rem',
+      borderRadius: '9999px',
+      color: '#000',
+    }}
+  >
+    Privacy
+  </a>
+  <a
+    href="https://www.instagram.com/tegenai_official?…"
+    target="_blank"
+    rel="noopener noreferrer"
+    style={{
+      textDecoration: 'none',
+      padding: '0.25rem 0.75rem',
+      borderRadius: '9999px',
+      color: '#000',
+    }}
+  >
+    Instagram
+  </a>
+</div>
+
+        </div>
       </footer>
+
     </div>
   );
 }
